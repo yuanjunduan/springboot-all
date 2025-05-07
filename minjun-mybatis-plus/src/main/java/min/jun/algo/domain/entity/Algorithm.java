@@ -50,7 +50,7 @@ public class Algorithm extends BaseEntity {
     public String algoCoverPath;
 
     @Schema(description = "上架状态，已发布，未发布")
-    public String status;
+    public Integer status;
 
     @Schema(description = "上架时间")
     public Date deployTime;

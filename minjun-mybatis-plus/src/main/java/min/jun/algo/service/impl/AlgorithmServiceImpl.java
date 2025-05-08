@@ -1,6 +1,7 @@
 package min.jun.algo.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -93,6 +94,21 @@ public class AlgorithmServiceImpl extends ServiceImpl<AlgorithmMapper, Algorithm
         this.getBaseMapper().InsertBatchEntity(objects);
 //       this.getBaseMapper().insertBatchSomeColumn(objects);
 //        boolean b = saveBatch(objects, 5);
+    }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public void updateBatch(Integer size) {
+
+        LambdaQueryWrapper<Algorithm> updateWrapper = new LambdaQueryWrapper<>();
+        updateWrapper.last("limit "+size);
+        List<Algorithm> algorithms = this.getBaseMapper().selectList(updateWrapper);
+
+        for (Algorithm temp : algorithms) {
+            temp.setServiceNum(temp.getServiceNum()+1);
+        }
+
+        this.getBaseMapper().updateBatchById(algorithms);
     }
 
 

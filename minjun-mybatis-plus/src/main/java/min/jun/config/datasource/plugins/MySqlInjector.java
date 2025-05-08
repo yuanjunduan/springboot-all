@@ -22,6 +22,7 @@ public class MySqlInjector extends MPJSqlInjector {
         methodList.add(new InsertBatchSomeColumn());
         // 添加你的批量插入方法
         methodList.add(new MysqlInsertAllBatch());
+        methodList.add(new MysqlUpdateBatchById());
         return methodList;
     }
 }

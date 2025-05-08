@@ -49,4 +49,10 @@ public class AlgorithmApi {
         RequestDataHelper.setRequestData(RequestDataHelper.TABLE_PRE, 1);
         algorithmService.saveBatch(size);
     }
+
+    @GetMapping("/update/{size}")
+    @Operation(summary = "批量保存", description = "批量保存")
+    public void updateBatch(@PathVariable Integer size) {
+        algorithmService.updateBatch(size);
+    }
 }

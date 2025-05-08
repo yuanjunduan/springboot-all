@@ -9,4 +9,6 @@ public interface AlgorithmService extends IService<Algorithm> {
     Object queryListPageChangeTableName(AlgorithmQueryCriteria criteria);
 
     void saveBatch(Integer size);
+
+    public void updateBatch(Integer size);
 }

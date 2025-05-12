@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${DB_HOST:192.168.118.20}:${DB_PORT:3306}/minjun_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&allowMultiQueries=true
+#      driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#      url: jdbc:p6spy:mysql://${DB_HOST:192.168.118.20}:${DB_PORT:3306}/minjun_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      db-type: mysql
+      username: root
+      password: 123456
+
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    #开启自动映射
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    auto-mapping-unknown-column-behavior: none
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+      #字段更新插入策略:字段更新插入策略: IGNORED所有字段都更新和插入; NOT_NULL只更新和插入非NULL值; NOT_EMPTY:只更新和插入非NULL值且非空字符串;
+      #如果业务场景需要更新字段为null,请在实体字段上添加注解 @TableField(updateStrategy = FieldStrategy.IGNORED, insertStrategy = FieldStrategy.IGNORED)
+      insert-strategy: NOT_NULL
+      table-underline: true
+      #逻辑删除,更新时请使用update(entity, updateWrapper),不要使用update(null, updateWrapper),否则可能导致无法自动追加(逻辑删除条件)
+      logic-delete-field: deletedAt
+      logic-not-delete-value: "null"
+      logic-delete-value: now()
+  mapper-locations: classpath*:/mapper/*.xml
+  typeAliasesPackage: com.ev.edge.mapper

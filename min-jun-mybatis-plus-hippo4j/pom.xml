@@ -9,7 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>minjun-mybatis-plus</artifactId>
+    <artifactId>min-jun-mybatis-plus-hippo4j</artifactId>
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -88,39 +89,14 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
-        <!-- mybatis-plus配置不同数据源 需要引入的包 -->
-<!--        <dependency>-->
-<!--            <groupId>com.baomidou</groupId>-->
-<!--            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
-            <groupId>org.dromara.dynamictp</groupId>
-            <artifactId>dynamic-tp-spring-boot-starter-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.dromara.dynamictp</groupId>
-            <artifactId>dynamic-tp-spring-boot-starter-adapter-webserver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.dromara.dynamictp</groupId>
-            <artifactId>dynamic-tp-spring-boot-starter-adapter-okhttp3</artifactId>
+            <groupId>cn.hippo4j</groupId>
+            <artifactId>hippo4j-spring-boot-starter</artifactId>
+            <version>1.5.0</version> <!-- 替换为当前的稳定版 -->
         </dependency>
 
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jd.platform</groupId>
-            <artifactId>asyncTool</artifactId>
-        </dependency>
     </dependencies>
+
     <build>
         <resources>
             <resource>
@@ -163,7 +139,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.3.RELEASE</version>
                 <configuration>
-                    <mainClass>min.jun.MinJunMybatisApplication</mainClass>
+                    <mainClass>min.jun.hippo4j.MinJunHippo4jApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

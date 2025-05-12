@@ -34,7 +34,7 @@ management:
 spring:
 
   profiles:
-    active: dev,dynamictp
+    active: dev,hippo4j
   lifecycle:
     timeout-per-shutdown-phase: 10s
   web:

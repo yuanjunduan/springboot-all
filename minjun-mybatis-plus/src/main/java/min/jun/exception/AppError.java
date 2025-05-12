@@ -46,6 +46,9 @@ public enum AppError {
      *
      */
     ILLEGAL_REQUEST_EXCEPTION("880006", "非法请求"),
+
+
+    SCHEDULE_TASK_EXIST("IDC000046", "定时任务已存在 %s"),
     /**
      *
      */

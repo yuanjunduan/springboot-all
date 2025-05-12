@@ -24,15 +24,15 @@ import java.util.concurrent.ExecutorService;
 @Component
 public class TaskExecutorToolUtils {
 
-    @PostConstruct
-    public void initTasks() {
-        TaskScheduler taskScheduler = ToolUtils.getTaskScheduler("TaskExecutorToolUtils");
-
-        //首次延迟10秒,间隔10s执行一次
-        int initialDelay = 1 * 10 * 1000;
-        DateTime startTime = DateUtil.offsetMillisecond(new Date(), initialDelay);
-        taskScheduler.scheduleWithFixedDelay(new DemoTask(), startTime, 1000 * 10);
-    }
+//    @PostConstruct
+//    public void initTasks() {
+//        TaskScheduler taskScheduler = ToolUtils.getTaskScheduler("TaskExecutorToolUtils");
+//
+//        //首次延迟10秒,间隔10s执行一次
+//        int initialDelay = 1 * 10 * 1000;
+//        DateTime startTime = DateUtil.offsetMillisecond(new Date(), initialDelay);
+//        taskScheduler.scheduleWithFixedDelay(new DemoTask(), startTime, 1000 * 10);
+//    }
 
 
     private static class DemoTask implements Runnable {

@@ -120,6 +120,14 @@
             <groupId>com.jd.platform</groupId>
             <artifactId>asyncTool</artifactId>
         </dependency>
+
+        <!--打印skywalking的TraceId到日志-->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>8.9.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <resources>

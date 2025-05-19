@@ -1,0 +1,70 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<configuration>-->
+<!--    <property name="logDir" value="/dubhe/log/vcs/"/>-->
+
+
+<!--    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">-->
+<!--            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">-->
+<!--                <pattern>%n%d{HH:mm:ss.SSS} ${HOSTNAME} %p [%X{traceId}] [%X{tid}]  [%t] [%c{1}:%M:%L] => %.-5000m%n</pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash;日志文件&ndash;&gt;-->
+<!--    <appender name="file_info" class="ch.qos.logback.core.FileAppender">-->
+<!--        <file>${log.path}/info.log</file>-->
+<!--        &lt;!&ndash; 循环政策：基于时间创建日志文件 &ndash;&gt;-->
+<!--        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">-->
+<!--            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">-->
+<!--                <Pattern>${log.pattern}</Pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--        &lt;!&ndash; 输出INFO级别以上的日志 &ndash;&gt;-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>DEBUG</level>-->
+<!--        </filter>-->
+<!--    </appender>>-->
+
+<!--    <appender name="grpc-log" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">-->
+<!--        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">-->
+<!--            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">-->
+<!--                <pattern>%n%d{HH:mm:ss.SSS} ${HOSTNAME} %p [%X{traceId}] [%X{tid}]  [%t] [%c{1}:%M:%L] => %.-5000m%n</pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+
+<!--    <appender name="file_all" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <File>${logDir}/all.log</File>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <FileNamePattern>${logDir}/all-%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>-->
+<!--            &lt;!&ndash;限定单个文件的大小&ndash;&gt;-->
+<!--            <maxFileSize>1GB</maxFileSize>-->
+<!--            &lt;!&ndash;限定归档文件的最大数量,对应filePattern中变量%i&ndash;&gt;-->
+<!--            <maxHistory>24</maxHistory>-->
+<!--            &lt;!&ndash;限定全局所有的归档日志的大小&ndash;&gt;-->
+<!--            <totalSizeCap>100GB</totalSizeCap>-->
+<!--            <cleanHistoryOnStart>true</cleanHistoryOnStart>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">-->
+<!--            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">-->
+<!--                <pattern>%n%d{yyyy-MM-dd HH:mm:ss.SSS} ${HOSTNAME} %p [%X{traceId}] [%X{tid}] [%t] [%c{1}:%M:%L] => %.-5000m%n</pattern>-->
+<!--            </layout>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="file_all_async" class="ch.qos.logback.classic.AsyncAppender">-->
+<!--        <discardingThreshold>0</discardingThreshold>-->
+<!--        <queueSize>1024</queueSize>-->
+<!--        <includeCallerData>true</includeCallerData>-->
+<!--        <appender-ref ref="file_all"/>-->
+<!--    </appender>-->
+
+<!--    <root level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--        <appender-ref ref="file_all_async"/>-->
+<!--        <appender-ref ref="grpc-log" />-->
+<!--    </root>-->
+
+<!--</configuration>-->

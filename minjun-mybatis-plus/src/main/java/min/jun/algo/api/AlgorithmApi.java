@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import min.jun.algo.domain.criteria.AlgorithmQueryCriteria;
 import min.jun.algo.service.AlgorithmService;
 import min.jun.config.datasource.RequestDataHelper;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,14 +44,19 @@ public class AlgorithmApi {
         return algorithmService.queryListPageChangeTableName(criteria);
     }
 
-
+    @Trace(operationName = "批量保存")
     @GetMapping("/save/{size}")
+    @Tags({@org.apache.skywalking.apm.toolkit.trace.Tag(key = "param", value = "arg[0]"),
+            @org.apache.skywalking.apm.toolkit.trace.Tag(key = "result", value = "returnedObj")})
     @Operation(summary = "批量保存", description = "批量保存")
     public void saveBatch(@PathVariable Integer size) {
         RequestDataHelper.setRequestData(RequestDataHelper.TABLE_PRE, 1);
         algorithmService.saveBatch(size);
     }
 
+    @Trace(operationName = "批量修改")
+    @Tags({@org.apache.skywalking.apm.toolkit.trace.Tag(key = "param", value = "arg[0]"),
+            @org.apache.skywalking.apm.toolkit.trace.Tag(key = "result", value = "returnedObj")})
     @GetMapping("/update/{size}")
     @Operation(summary = "批量保存", description = "批量保存")
     public void updateBatch(@PathVariable Integer size) {

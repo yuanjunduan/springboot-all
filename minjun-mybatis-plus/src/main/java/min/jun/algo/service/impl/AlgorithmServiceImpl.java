@@ -15,13 +15,17 @@ import min.jun.algo.domain.mapstruct.AlgorithmMapstruct;
 import min.jun.algo.domain.vo.AlgorithmVo;
 import min.jun.algo.mapper.AlgorithmMapper;
 import min.jun.algo.service.AlgorithmService;
+import min.jun.config.hook.MessageSender;
+import min.jun.config.hook.MqMessageCommitHook;
+import min.jun.config.hook.OrderCreatedEvent;
 import min.jun.utils.PageResult;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -30,6 +34,7 @@ import java.util.stream.Collectors;
 public class AlgorithmServiceImpl extends ServiceImpl<AlgorithmMapper, Algorithm> implements AlgorithmService {
 
     private final AlgorithmMapstruct algorithmMapstruct;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public Object queryListPage(AlgorithmQueryCriteria algoQuery) {
@@ -94,6 +99,13 @@ public class AlgorithmServiceImpl extends ServiceImpl<AlgorithmMapper, Algorithm
         this.getBaseMapper().InsertBatchEntity(objects);
 //       this.getBaseMapper().insertBatchSomeColumn(objects);
 //        boolean b = saveBatch(objects, 5);
+
+        // 发布事件（事务提交后触发）
+        eventPublisher.publishEvent(new OrderCreatedEvent(objects.get(1), "msgType add", "uniqueKey"));
+
+        TransactionSynchronizationManager.registerSynchronization(
+                new MqMessageCommitHook(() -> MessageSender.sendMQMessage(new OrderCreatedEvent(objects.get(1), "msgType add 1", "uniqueKey")))
+        );
     }
 
     @Override
@@ -101,14 +113,21 @@ public class AlgorithmServiceImpl extends ServiceImpl<AlgorithmMapper, Algorithm
     public void updateBatch(Integer size) {
 
         LambdaQueryWrapper<Algorithm> updateWrapper = new LambdaQueryWrapper<>();
-        updateWrapper.last("limit "+size);
+        updateWrapper.last("limit " + size);
         List<Algorithm> algorithms = this.getBaseMapper().selectList(updateWrapper);
 
         for (Algorithm temp : algorithms) {
-            temp.setServiceNum(temp.getServiceNum()+1);
+            temp.setServiceNum(temp.getServiceNum() + 1);
         }
 
         this.getBaseMapper().updateBatchById(algorithms);
+
+        // 发布事件（事务提交后触发）
+        eventPublisher.publishEvent(new OrderCreatedEvent(algorithms.get(1), "msgType update", "uniqueKey"));
+        TransactionSynchronizationManager.registerSynchronization(
+                new MqMessageCommitHook(() -> MessageSender.sendMQMessage(new OrderCreatedEvent(algorithms.get(1), "msgType update 1", "uniqueKey")))
+        );
+
     }
 
 
@@ -137,7 +156,6 @@ public class AlgorithmServiceImpl extends ServiceImpl<AlgorithmMapper, Algorithm
         PageResult<AlgorithmVo> result = new PageResult<>();
         result.setTotalElements(page.getTotal());
         result.setContent(algorithmMapstruct.toVo(page.getRecords()));
-
 
 
         return result;
